@@ -9,11 +9,8 @@ function App() {
     const scope=useRef(null);
     const [rotation, setRotation] = useState(0);
     useEffect(()=>{
-        if(!scope.current){
-            return;
-        }
         scope.current=createScope({vite}).add(self=>{
-            animate('.logo',{
+            animate('.size-bounce',{
                 scale:[
                     {to:1.25,ease: 'inOut(3)',duration:500},
                     {to:1,ease:createSpring({stiffness:300})}
