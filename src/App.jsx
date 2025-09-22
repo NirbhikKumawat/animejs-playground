@@ -7,10 +7,11 @@ import {animate,createScope,createSpring,createDraggable} from "animejs";
 function App() {
     const vite = useRef(null);
     const scope=useRef(null);
+    const reactanim = useRef(null);
     const [rotation, setRotation] = useState(0);
     useEffect(()=>{
         scope.current=createScope({vite}).add(self=>{
-            animate('.logo',{
+            animate('.vite',{
                 scale:[
                     {to:1.25,ease: 'inOut(3)',duration:500},
                     {to:1,ease:createSpring({stiffness:300})}
@@ -20,6 +21,16 @@ function App() {
         });
         return ()=>scope.current.revert();
     },[])
+    useEffect(()=>{
+        scope.current=createScope({reactanim}).add(self=>{
+            createDraggable('.react',{
+                container:[0,0,0,0],
+                releaseEase: createSpring({stiffness:300}),
+            })
+        });
+        return ()=> scope.current.revert();
+    },[])
+
   const [count, setCount] = useState(0)
 
   return (
@@ -27,12 +38,14 @@ function App() {
       <div>
           <div ref={vite} className="size-bounce">
         <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          <img src={viteLogo} className="logo vite" alt="Vite logo" />
         </a>
           </div>
+          <div ref={reactanim} className="dragable">
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+          </div>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
