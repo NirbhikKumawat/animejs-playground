@@ -5,11 +5,14 @@ import './App.css'
 import {animate,createScope,createSpring,createDraggable} from "animejs";
 
 function App() {
-    const root = useRef(null);
+    const vite = useRef(null);
     const scope=useRef(null);
     const [rotation, setRotation] = useState(0);
     useEffect(()=>{
-        scope.current=createScope({root}).add(self=>{
+        if(!scope.current){
+            return;
+        }
+        scope.current=createScope({vite}).add(self=>{
             animate('.logo',{
                 scale:[
                     {to:1.25,ease: 'inOut(3)',duration:500},
@@ -25,7 +28,7 @@ function App() {
   return (
     <>
       <div>
-          <div ref={root} className="size-bounce">
+          <div ref={vite} className="size-bounce">
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
