@@ -8,9 +8,9 @@ import {createTimer} from 'animejs';
 function Timer(){
     const scope = useRef(null);
     const [$time,$count] = utils.$('.value');
-    /*useEffect(()=>{
-
-    })*/
+    useEffect(()=>{
+        scope.current=createScope()
+    })
     createTimer({
         duration: 1000,
         loop: true,
@@ -55,16 +55,7 @@ function App() {
         });
         return ()=>scope.current.revert();
     },[])
-    const reactanim = useRef(null);
-    /*useEffect(()=>{
-        scope.current=createScope({reactanim}).add(self=>{
-            createDraggable('.react',{
-                container:[0,0,0,0],
-                releaseEase: createSpring({stiffness:300}),
-            })
-        });
-        return ()=> scope.current.revert();
-    },[])*/
+
 
   const [count, setCount] = useState(0)
 
@@ -76,7 +67,7 @@ function App() {
                       <img src={viteLogo} className="logo vite" alt="Vite logo"/>
                   </a>
               </div>
-              <div ref={reactanim} className="dragable">
+              <div ref={vite} className="dragable">
                   <a href="https://react.dev" target="_blank">
                       <img src={reactLogo} className="logo react" alt="React logo"/>
                   </a>
