@@ -5,36 +5,7 @@ import './App.css'
 import {animate, createScope, createSpring, createDraggable, utils} from "animejs";
 import {createTimer} from 'animejs';
 
-function Timer(){
-    const scope = useRef(null);
-    const [$time,$count] = utils.$('.value');
-    useEffect(()=>{
-        scope.current=createScope()
-    })
-    createTimer({
-        duration: 1000,
-        loop: true,
-        frameRate: 30,
-        onUpdate: self => $time.innerHTML = self.currentTime,
-        onLoop: self => $count.innerHTML = self._currentIteration
-    });
-    return (
-        <div className="large centered row">
-            <div className="half col">
-                <pre className="large log row">
-                    <span className="label">current time</span>
-                    <span className="value lcd">0</span>
-                </pre>
-            </div>
-            <div className="half col">
-                <pre className="large log row">
-                    <span className="label">callback fired</span>
-                    <span className="value lcd">0</span>
-                </pre>
-            </div>
-        </div>
-    )
-}
+
 function App() {
     const vite = useRef(null);
     const reactanim = useRef(null);
@@ -89,7 +60,6 @@ function App() {
           <p className="read-the-docs">
               Click on the Vite and React logos to learn more
           </p>
-          {/*<Timer/>*/}
       </>
   )
 }
