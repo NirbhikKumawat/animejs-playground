@@ -3,9 +3,41 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import {animate, createScope, createSpring, createDraggable, utils} from "animejs";
-import {createTimer} from 'animejs';
+import {stagger,text as textUtil} from 'animejs';
 
-
+function Vire(){
+    const headingRef = useRef(null);
+    useEffect(() => {
+        if(!headingRef.current){
+            return;
+        }
+        const scope = createScope({root:headingRef.current,});
+        scope.add(()=>{
+            const {words,chars} = textUtil.split(headingRef.current,{
+                words:{wrap:'span',class:'word'},
+                chars:true,
+            });
+            animate(chars,{
+                y:[
+                    {to:'-2.75rem',ease : 'outExpo',duration:600},
+                    {to:0,ease:'outBounce',duration:800,delay:100}
+                ],
+                rotate:{
+                    from:'-1turn',
+                    delay:0
+                },
+                delay:stagger(50),
+                ease: 'inOutCirc',
+                loopDelay:1000,
+                loop:true
+            })
+        })
+        return () => scope.revert()
+    }, []);
+    return (
+        <h1 ref={headingRef}>Vite + React</h1>
+    )
+}
 function App() {
     const vite = useRef(null);
     const reactanim = useRef(null);
@@ -48,7 +80,7 @@ function App() {
                   </a>
               </div>
           </div>
-          <h1>Vite + React</h1>
+          <Vire/>
           <div className="card">
               <button onClick={() => setCount((count) => count + 1)}>
                   count is {count}
