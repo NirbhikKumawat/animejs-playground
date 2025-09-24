@@ -37,23 +37,27 @@ function Timer(){
 }
 function App() {
     const vite = useRef(null);
-    const scope=useRef(null);
+    const reactanim = useRef(null);
     const [rotation, setRotation] = useState(0);
     useEffect(()=>{
-        scope.current=createScope({vite}).add(self=>{
+        const animationScope = createScope({
+            vite: vite.current,
+            reactanim: reactanim.current,
+        }).add(()=>{
             animate('.vite',{
                 scale:[
-                    {to:1.25,ease: 'inOut(3)',duration:500},
-                    {to:1,ease:createSpring({stiffness:300})}
+                    {to:1.25,ease:'inOut(3)',duration:500},
+                    {to:1,ease: createSpring({stiffness:300})}
                 ],
                 loop:true,
             });
+
             createDraggable('.react',{
                 container:[0,0,0,0],
-                releaseEase: createSpring({stiffness:300}),
-            })
+                releaseEase:createSpring({stiffness:300})
+            });
         });
-        return ()=>scope.current.revert();
+        return ()=>animationScope.revert();
     },[])
 
 
@@ -67,7 +71,7 @@ function App() {
                       <img src={viteLogo} className="logo vite" alt="Vite logo"/>
                   </a>
               </div>
-              <div ref={vite} className="dragable">
+              <div ref={reactanim} className="dragable">
                   <a href="https://react.dev" target="_blank">
                       <img src={reactLogo} className="logo react" alt="React logo"/>
                   </a>
