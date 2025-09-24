@@ -6,7 +6,11 @@ import {animate, createScope, createSpring, createDraggable, utils} from "animej
 import {createTimer} from 'animejs';
 
 function Timer(){
+    const scope = useRef(null);
     const [$time,$count] = utils.$('.value');
+    /*useEffect(()=>{
+
+    })*/
     createTimer({
         duration: 1000,
         loop: true,
@@ -44,11 +48,15 @@ function App() {
                 ],
                 loop:true,
             });
+            createDraggable('.react',{
+                container:[0,0,0,0],
+                releaseEase: createSpring({stiffness:300}),
+            })
         });
         return ()=>scope.current.revert();
     },[])
     const reactanim = useRef(null);
-    useEffect(()=>{
+    /*useEffect(()=>{
         scope.current=createScope({reactanim}).add(self=>{
             createDraggable('.react',{
                 container:[0,0,0,0],
@@ -56,7 +64,7 @@ function App() {
             })
         });
         return ()=> scope.current.revert();
-    },[])
+    },[])*/
 
   const [count, setCount] = useState(0)
 
@@ -86,7 +94,7 @@ function App() {
           <p className="read-the-docs">
               Click on the Vite and React logos to learn more
           </p>
-          <Timer/>
+          {/*<Timer/>*/}
       </>
   )
 }
