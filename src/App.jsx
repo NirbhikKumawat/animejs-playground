@@ -107,6 +107,28 @@ function Square4(){
     )
 }
 
+function Square5(){
+    const squareRef = useRef(null);
+    useEffect(()=>{
+        if(!squareRef.current){
+            return;
+        }
+        const scope = createScope({root:squareRef.current});
+        scope.add(()=>{
+            animate(squareRef.current,{
+                translateX:100,
+                rotate:'1turn',
+                skew:45,
+                loop:true,
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <div ref={squareRef} className="square5"></div>
+    )
+}
+
 function Vire(){
     const headingRef = useRef(null);
     useEffect(() => {
@@ -199,6 +221,7 @@ function App() {
               <Square2 />
               <Square3 />
               <Square4/>
+              <Square5/>
           </div>
       </>
   )
