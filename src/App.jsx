@@ -15,7 +15,9 @@ function Square(){
         scope.add(()=>{
             animate(squareRef.current,{
                 translateX:100,
-                scale:2
+                scale:2,
+                loop:true,
+                direction:'alternate'
             })
         })
         return () => scope.revert()
@@ -33,7 +35,10 @@ function Square2(){
         }
         const scope = createScope({root:squareRef.current});
         scope.add(()=>{
-            const timeline = createTimeline();
+            const timeline = createTimeline({
+                loop:true,
+                direction: 'alternate',
+            });
             timeline.add(squareRef.current,{
                 translateX:100,
             });
@@ -76,6 +81,29 @@ function Square3(){
     },[])
     return (
         <div ref={squareRef} className="square3"></div>
+    )
+}
+
+function Square4(){
+    const squareRef = useRef(null);
+    useEffect(()=>{
+        if(!squareRef.current){
+            return;
+        }
+        const scope = createScope({root:squareRef.current});
+        scope.add(()=>{
+            animate(squareRef.current,{
+                borderRadius:64,
+                filter: 'blur(10px)',
+                translateX:100,
+                'background-color': '#F9F640',
+                loop:true,
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <div ref={squareRef} className="square4"></div>
     )
 }
 
@@ -170,6 +198,7 @@ function App() {
               <Square />
               <Square2 />
               <Square3 />
+              <Square4/>
           </div>
       </>
   )
