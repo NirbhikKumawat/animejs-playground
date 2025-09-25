@@ -2,7 +2,7 @@ import { useState,useRef,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import {animate, createScope, createSpring, createDraggable, utils} from "animejs";
+import {animate, createScope, createSpring, createDraggable, createTimeline} from "animejs";
 import {stagger,text as textUtil} from 'animejs';
 
 function Square(){
@@ -15,12 +15,36 @@ function Square(){
         scope.add(()=>{
             animate(squareRef.current,{
                 translateX:100,
+                scale:2
             })
         })
         return () => scope.revert()
     },[])
     return (
         <div ref={squareRef} className="square"></div>
+    )
+}
+
+function Square2(){
+    const squareRef = useRef(null);
+    useEffect(()=>{
+        if(!squareRef.current){
+            return;
+        }
+        const scope = createScope({root:squareRef.current});
+        scope.add(()=>{
+            const timeline = createTimeline();
+            timeline.add(squareRef.current,{
+                translateX:100,
+            });
+            timeline.add(squareRef.current,{
+                scale:2
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <div ref={squareRef} className="square2"></div>
     )
 }
 
@@ -112,6 +136,7 @@ function App() {
               Click on the Vite and React logos to learn more
           </p>
           <Square />
+          <Square2 />
       </>
   )
 }

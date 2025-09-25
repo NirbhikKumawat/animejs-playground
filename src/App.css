@@ -41,7 +41,12 @@
   color: #888;
 }
 .square{
-    height: 100px;
-    width: 100px;
+    height: 50px;
+    width: 50px;
     background-color: aqua;
+}
+.square2{
+    height: 50px;
+    width: 50px;
+    background-color: greenyellow;
 }
