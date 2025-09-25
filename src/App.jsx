@@ -48,6 +48,37 @@ function Square2(){
     )
 }
 
+function Square3(){
+    const squareRef = useRef(null);
+    useEffect(()=>{
+        if(!squareRef.current){
+            return;
+        }
+        const scope = createScope({root:squareRef.current});
+        scope.add(()=>{
+            animate(squareRef.current,{
+                translateX:100,
+                scale:2,
+                opacity: .5,
+                duration:200,
+                delay:400,
+                loop:true,
+                loopDelay:400,
+                ease: 'out(3)',
+                alternate: true,
+                autoplay: true,
+                onBegin:()=>{},
+                onLoop:()=>{},
+                onUpdate:()=>{},
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <div ref={squareRef} className="square3"></div>
+    )
+}
+
 function Vire(){
     const headingRef = useRef(null);
     useEffect(() => {
@@ -135,8 +166,11 @@ function App() {
           <p className="read-the-docs">
               Click on the Vite and React logos to learn more
           </p>
-          <Square />
-          <Square2 />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '100px', padding: '20px' }}>
+              <Square />
+              <Square2 />
+              <Square3 />
+          </div>
       </>
   )
 }
