@@ -5,6 +5,25 @@ import './App.css'
 import {animate, createScope, createSpring, createDraggable, utils} from "animejs";
 import {stagger,text as textUtil} from 'animejs';
 
+function Square(){
+    const squareRef = useRef(null);
+    useEffect(()=>{
+        if(!squareRef.current){
+            return;
+        }
+        const scope = createScope({root:squareRef.current});
+        scope.add(()=>{
+            animate(squareRef.current,{
+                translateX:100,
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <div ref={squareRef} className="square"></div>
+    )
+}
+
 function Vire(){
     const headingRef = useRef(null);
     useEffect(() => {
@@ -92,6 +111,7 @@ function App() {
           <p className="read-the-docs">
               Click on the Vite and React logos to learn more
           </p>
+          <Square />
       </>
   )
 }
