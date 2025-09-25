@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import {animate, createScope, createSpring, createDraggable, createTimeline} from "animejs";
-import {stagger,text as textUtil} from 'animejs';
+import {stagger,utils,text as textUtil} from 'animejs';
 
 function Square(){
     const squareRef = useRef(null);
@@ -128,6 +128,31 @@ function Square5(){
         <div ref={squareRef} className="square5"></div>
     )
 }
+function Square6(){
+    const sliderRef = useRef(null);
+    const textRef = useRef(null);
+    useEffect(()=>{
+        if(!sliderRef.current||!textRef.current){
+            return;
+        }
+        const scope = createScope({root:sliderRef.current});
+        scope.add(()=>{
+            animate([sliderRef.current,textRef.current],{
+                value:1000,
+                alternate: true,
+                loop:true,
+                modifier: utils.round(0)
+            })
+        })
+        return () => scope.revert()
+    },[])
+    return (
+        <pre className="htmlattributes">
+            <input ref={sliderRef} type="range" value="0" min="0" max="1000"/>
+            <input  ref={textRef} type="text" value="0" size="5"/>
+        </pre>
+    )
+}
 
 function Vire(){
     const headingRef = useRef(null);
@@ -222,6 +247,7 @@ function App() {
               <Square3 />
               <Square4/>
               <Square5/>
+              <Square6/>
           </div>
       </>
   )
