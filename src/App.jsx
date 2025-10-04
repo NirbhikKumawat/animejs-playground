@@ -153,6 +153,62 @@ function Square6(){
         </pre>
     )
 }
+function CharHeader() {
+    const textRef = useRef(null);
+
+    useEffect(() => {
+        if (!textRef.current) return;
+
+        const text = textRef.current.textContent;
+        textRef.current.textContent = '';
+        text.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'char';
+            textRef.current.appendChild(span);
+        });
+
+        animate('.char',{
+            translateY: [20, 0],
+            opacity: [0, 1],
+            duration: 800,
+            ease: 'easeOutExpo',
+            delay: stagger(50),
+        });
+    }, []);
+
+    return <h2 ref={textRef}>By Character</h2>;
+}
+
+function WordHeader() {
+    const textRef = useRef(null);
+
+    useEffect(() => {
+        if (!textRef.current) return;
+
+        const text = textRef.current.textContent;
+        textRef.current.textContent = '';
+        text.split(' ').forEach(word => {
+            const span = document.createElement('span');
+            span.textContent = word;
+            span.className = 'word';
+            textRef.current.appendChild(span);
+            // Add the space back
+            textRef.current.append(' ');
+        });
+
+        animate('.word',{
+            translateY: [20, 0],
+            opacity: [0, 1],
+            duration: 800,
+            ease: 'easeOutExpo',
+            delay: stagger(150), // Slower stagger for words
+        });
+    }, []);
+
+    return <h2 ref={textRef}>By Word</h2>;
+}
+
 
 function Vire(){
     const headingRef = useRef(null);
@@ -248,6 +304,8 @@ function App() {
               <Square4/>
               <Square5/>
               <Square6/>
+              <CharHeader/>
+              <WordHeader/>
           </div>
       </>
   )
