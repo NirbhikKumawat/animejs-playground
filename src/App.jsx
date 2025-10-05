@@ -342,6 +342,42 @@ function Timer4(){
     )
 }
 
+function Timer5(){
+    useEffect(()=>{
+        const scope=createScope();
+        const [ $time ] = utils.$('.time2');
+        const [ $playButton ] = utils.$('.play');
+
+        let loops = 0;
+        scope.add(()=>{
+            const timer = createTimer({
+                autoplay: false,
+                onUpdate: self => $time.innerHTML = self.currentTime
+            });
+            const playTimer = () => timer.play();
+
+            $playButton.addEventListener('click', playTimer);
+        })
+    },[])
+    return (
+        <>
+            <div className="large centered row">
+                <div className="half col">
+                    <pre className="large log row">
+                        <span className="label">current time </span>
+                        <span className="time2 value lcd">0</span>
+                    </pre>
+            </div>
+            </div>
+            <div className="medium row">
+                <fieldset className="controls">
+                    <button className="play">Play</button>
+                </fieldset>
+            </div>
+        </>
+    )
+}
+
 function Vire() {
     const headingRef = useRef(null);
     useEffect(() => {
@@ -442,6 +478,7 @@ function App() {
               <Timer2/>
               <Timer3/>
               <Timer4/>
+              <Timer5/>
           </div>
       </>
   )
