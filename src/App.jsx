@@ -273,6 +273,40 @@ function Timer2(){
     )
 }
 
+function Timer3(){
+    useEffect(()=>{
+        const scope=createScope();
+        const [ $loops ] = utils.$('.loops');
+        const [ $time ] = utils.$('.time');
+
+        let loops = 0;
+        scope.add(()=>{
+            createTimer({
+                loop: true,
+                duration: 1000,
+                onLoop: () => $loops.innerHTML = ++loops,
+                onUpdate: self => $time.innerHTML = self.iterationCurrentTime
+            });
+        })
+    },[])
+    return (
+        <div className="large centered row">
+            <div className="col">
+                <pre className="large log row">
+                    <span className="label">loops count </span>
+                    <span className="loops value">0</span>
+                </pre>
+            </div>
+            <div className="col">
+                <pre className="large log row">
+                    <span className="label">iteration time </span>
+                    <span className="time value lcd">0</span>
+                </pre>
+            </div>
+        </div>
+    )
+}
+
 function Vire() {
     const headingRef = useRef(null);
     useEffect(() => {
@@ -371,6 +405,7 @@ function App() {
               <WordHeader/>
               <Timer/>
               <Timer2/>
+              <Timer3/>
           </div>
       </>
   )
