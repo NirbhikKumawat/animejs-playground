@@ -227,14 +227,46 @@ function Timer(){
         <div className="large centered row">
             <div className="half col">
                 <pre className="large log row">
-                    <span className="label">current time</span>
+                    <span className="label">current time </span>
                     <span className="value lcd">0</span>
                 </pre>
             </div>
             <div className="half col">
                 <pre className="large log row">
-                    <span className="label">callback fired</span>
+                    <span className="label">callback fired </span>
                     <span className="value lcd">0</span>
+                </pre>
+            </div>
+        </div>
+    )
+}
+
+function Timer2(){
+    useEffect(()=>{
+        const scope=createScope();
+        const [ $time, $count ] = utils.$('.value1');
+        scope.add(()=>{
+            createTimer({
+                delay: 1000,
+                duration: 1000,
+                frameRate: 30,
+                onUpdate: self => $time.innerHTML = self.currentTime,
+                onLoop: self => $count.innerHTML = self._currentIteration
+            });
+        })
+    },[])
+    return (
+        <div className="large centered row">
+            <div className="half col">
+                <pre className="large log row">
+                    <span className="label">current time </span>
+                    <span className="value1 lcd">0</span>
+                </pre>
+            </div>
+            <div className="half col">
+                <pre className="large log row">
+                    <span className="label">callback fired </span>
+                    <span className="value1 lcd">0</span>
                 </pre>
             </div>
         </div>
@@ -338,6 +370,7 @@ function App() {
               <CharHeader/>
               <WordHeader/>
               <Timer/>
+              <Timer2/>
           </div>
       </>
   )
