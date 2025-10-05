@@ -2,7 +2,7 @@ import { useState,useRef,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import {animate, createScope, createSpring, createDraggable, createTimeline} from "animejs";
+import {animate, createScope, createSpring, createDraggable, createTimeline, createTimer} from "animejs";
 import {stagger,utils,text as textUtil} from 'animejs';
 
 function Square(){
@@ -170,14 +170,14 @@ function CharHeader() {
 
         animate('.char',{
             translateY: [20, 0],
-            opacity: [0, 1],
+            opacity: [0.125, 1],
             duration: 800,
             ease: 'easeOutExpo',
             delay: stagger(50),
         });
     }, []);
 
-    return <h2 ref={textRef}>By Character</h2>;
+    return <h2 ref={textRef}>Hello React Vite</h2>;
 }
 
 function WordHeader() {
@@ -199,27 +199,58 @@ function WordHeader() {
 
         animate('.word',{
             translateY: [20, 0],
-            opacity: [0, 1],
+            opacity: [0.125, 1],
             duration: 800,
             ease: 'easeOutExpo',
             delay: stagger(150), // Slower stagger for words
         });
     }, []);
 
-    return <h2 ref={textRef}>By Word</h2>;
+    return <h2 ref={textRef}>Hello React Vite</h2>;
 }
 
+function Timer(){
+    useEffect(()=>{
+        const scope=createScope();
+        const [ $time, $count ] = utils.$('.value');
+        scope.add(()=>{
+            createTimer({
+                duration: 1000,
+                loop: true,
+                frameRate: 30,
+                onUpdate: self => $time.innerHTML = self.currentTime,
+                onLoop: self => $count.innerHTML = self._currentIteration
+            });
+        })
+    },[])
+    return (
+        <div className="large centered row">
+            <div className="half col">
+                <pre className="large log row">
+                    <span className="label">current time</span>
+                    <span className="value lcd">0</span>
+                </pre>
+            </div>
+            <div className="half col">
+                <pre className="large log row">
+                    <span className="label">callback fired</span>
+                    <span className="value lcd">0</span>
+                </pre>
+            </div>
+        </div>
+    )
+}
 
-function Vire(){
+function Vire() {
     const headingRef = useRef(null);
     useEffect(() => {
-        if(!headingRef.current){
+        if (!headingRef.current) {
             return;
         }
-        const scope = createScope({root:headingRef.current,});
-        scope.add(()=>{
-            const {words,chars} = textUtil.split(headingRef.current,{
-                words:{wrap:'span',class:'word'},
+        const scope = createScope({root: headingRef.current,});
+        scope.add(() => {
+            const {words, chars} = textUtil.split(headingRef.current, {
+                words: {wrap: 'span', class: 'word'},
                 chars:true,
             });
             animate(chars,{
@@ -306,6 +337,7 @@ function App() {
               <Square6/>
               <CharHeader/>
               <WordHeader/>
+              <Timer/>
           </div>
       </>
   )
